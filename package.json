@@ -9,10 +9,6 @@
     "lint": "next lint"
   },
   "packageManager": "npm@10.5.2",
-  "overrides": {
-    "react": "react",
-    "react-dom": "react-dom"
-  },
   "dependencies": {
     "react": "19.0.0-rc-69d4b800-20241021",
     "react-dom": "19.0.0-rc-69d4b800-20241021",
