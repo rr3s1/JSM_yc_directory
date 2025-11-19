@@ -6,10 +6,6 @@ const nextConfig: NextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  // Ignores ESLint errors during the build process.
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   // Configuration for Next.js Image optimization.
   images: {
     // Allows the use of SVG images from remote sources, which is disabled by default for security.
@@ -21,6 +17,11 @@ const nextConfig: NextConfig = {
         hostname: "*", // Allows images from any hostname under the https protocol.
       },
     ],
+  },
+  // Enables Partial Prerendering (PPR) via cacheComponents.
+  cacheComponents: true,
+  devIndicators: {
+    position: "bottom-right",
   },
 };
 
