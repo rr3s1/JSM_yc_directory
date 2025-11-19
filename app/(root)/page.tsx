@@ -1,7 +1,8 @@
 // Imports the SearchForm and StartupCard components.
 import SearchForm from "@/components/SearchForm";
-import StartupCard from "@/components/StartupCard";
-import type { StartupTypeCard } from "@/lib/types";
+import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
+import { ALL_STARTUPS_QUERY, SEARCH_STARTUPS_QUERY } from "@/sanity/lib/queries";
+import {client} from "@/sanity/lib/client";
 
 // Defines the Home page as an async component to handle awaited search parameters.
 export default async function Home({
@@ -12,17 +13,21 @@ export default async function Home({
 }) {
   // Awaits the resolution of searchParams to get the current search query.
   const query = (await searchParams).query;
-  // Defines a mock array of posts to simulate data fetching.
-  const posts = [{
-    _createdAt: new Date(),
-    views: 55,
-    author: {_id: 1, name: 'John Doe'},
-    _id: 1,
-    description: 'This is a description',
-    image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1640&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-    category: 'Technology',
-    title: 'We <3 robots',
-  }]
+
+  let posts: StartupTypeCard[] = [];
+  try {
+    if (query && query.trim()) {
+      const searchParam = `*${query.trim()}*`;
+      const result = await client.fetch(SEARCH_STARTUPS_QUERY, { search: searchParam });
+      posts = Array.isArray(result) ? result : [];
+    } else {
+      const result = await client.fetch(ALL_STARTUPS_QUERY);
+      posts = Array.isArray(result) ? result : [];
+    }
+  } catch (error) {
+    console.error("Error fetching posts:", error);
+  }
+
  
   return (
     <>
