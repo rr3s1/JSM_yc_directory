@@ -35,14 +35,18 @@ const StartupContent = async ({ id }: { id: string }) => {
             </section>
 
             <section className="section_container">
-                <Image
-                    src={post.image}
-                    alt={post.title}
-                    width={1200}
-                    height={630}
-                    sizes="100vw"
-                    className="w-full h-auto rounded-xl"
-                />
+                {post.image ? (
+                    <Image
+                        src={post.image}
+                        alt={post.title}
+                        width={1200}
+                        height={630}
+                        sizes="100vw"
+                        className="w-full h-auto rounded-xl"
+                    />
+                ) : (
+                    <div className="w-full h-[630px] rounded-xl bg-black-100" />
+                )}
 
                 <div className="space-y-5 mt-10 max-w-4xl mx-auto">
                     <div className="flex-between gap-5">
@@ -51,13 +55,17 @@ const StartupContent = async ({ id }: { id: string }) => {
                                 href={`/user/${post.author._id}`}
                                 className="flex gap-2 items-center mb-3"
                             >
-                                <Image
-                                    src={post.author.image}
-                                    alt={`${post.author.name} avatar`}
-                                    width={64}
-                                    height={64}
-                                    className="rounded-full drop-shadow-lg"
-                                />
+                                {post.author.image ? (
+                                    <Image
+                                        src={post.author.image}
+                                        alt={`${post.author.name} avatar`}
+                                        width={64}
+                                        height={64}
+                                        className="rounded-full drop-shadow-lg"
+                                    />
+                                ) : (
+                                    <div className="size-16 rounded-full bg-black-100 drop-shadow-lg" />
+                                )}
 
                                 <div>
                                     <p className="text-20-medium">{post.author.name}</p>
