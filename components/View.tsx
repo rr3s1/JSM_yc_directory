@@ -3,11 +3,11 @@ import { client } from "@/sanity/lib/client";
 import { STARTUP_VIEWS_QUERY } from "@/sanity/lib/queries";
 
 const View = async ({ id }: { id: string }) => {
-    const { views: totalViews } = await client
+    const result = await client
         .withConfig({ useCdn: false })
         .fetch(STARTUP_VIEWS_QUERY, { id });
 
-    // TODO: Update number of views by visitors
+    const totalViews = result?.views ?? 0;
 
     return (
         <div className="view-container">
