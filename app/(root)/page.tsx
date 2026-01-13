@@ -3,19 +3,18 @@ import StartupCard, { StartupTypeCard } from "@/components/StartupCard";
 import { STARTUPS_QUERY } from "@/lib/queries";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { auth } from "@/auth";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cache } from "react";
+import { Suspense } from "react";
 
-export default async function Home({
-  searchParams,
-}: {
-  searchParams: Promise<{ query?: string }>;
-}) {
-  const query = (await searchParams).query;
-  
+const getCachedSession = cache(auth);
+
+const HomeContent = async ({ query }: { query?: string }) => {
   const params = { search: query || null };
 
-  const session = await auth();
-
-  console.log(session?.id);
+  // NOTE: auth() can touch runtime data (cookies/headers/connection).
+  // Keep it behind Suspense to avoid PPR "blocking route" warnings.
+  await getCachedSession();
 
   const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params });
 
@@ -27,7 +26,7 @@ export default async function Home({
           Connect With Entrepreneurs
         </h1>
 
-        <p className="sub-heading !max-w-3xl">
+        <p className="sub-heading max-w-3xl!">
           Submit Ideas, Vote on Pitches, and Get Noticed in Virtual
           Competitions.
         </p>
@@ -53,5 +52,33 @@ export default async function Home({
 
       <SanityLive />
     </>
+  );
+};
+
+const HomeRoute = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ query?: string }>;
+}) => {
+  const { query } = await searchParams;
+  return <HomeContent query={query} />;
+};
+
+export default function Home({
+  searchParams,
+}: {
+  searchParams: Promise<{ query?: string }>;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen">
+          <Skeleton className="h-[230px] w-full" />
+          <Skeleton className="h-96 w-full mt-10" />
+        </div>
+      }
+    >
+      <HomeRoute searchParams={searchParams} />
+    </Suspense>
   );
 }
