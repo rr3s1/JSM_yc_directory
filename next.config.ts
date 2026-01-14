@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.sanity.io",
+        hostname: "*",
       },
     ],
   },
@@ -18,7 +18,6 @@ const nextConfig: NextConfig = {
 
   experimental: {
     // Enables the unstable_after API for non-blocking server tasks
-    after: true,
   },
 
   devIndicators: {

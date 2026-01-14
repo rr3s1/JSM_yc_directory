@@ -12,8 +12,3 @@ export const writeClient = createClient({
     useCdn: false, // Write operations should bypass the CDN
     token, // Includes the secure API token with Editor permissions
 });
-
-// Failsafe to ensure the write token exists before proceeding
-if (!writeClient.config().token) {
-    throw new Error("Write token not found.");
-}
