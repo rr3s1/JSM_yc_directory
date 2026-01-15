@@ -1,7 +1,7 @@
 import { defineQuery } from "next-sanity";
 
 // Query for all startups (no search) - using defineQuery for type safety
-export const ALL_STARTUPS_QUERY = defineQuery(
+export const STARTUPS_QUERY = defineQuery(
   `*[_type == "startup"] | order(_createdAt desc) {
     _id, 
     title, 
@@ -40,4 +40,18 @@ export const STARTUP_VIEWS_QUERY = defineQuery(
     views
   }`
 );
+
+
+
+export const AUTHOR_BY_GITHUB_ID_QUERY = defineQuery(`
+*[_type == "author" && id == $id][0]{
+    _id,
+    id,
+    name,
+    username,
+    email,
+    image,
+    bio
+}
+`);
 
