@@ -13,12 +13,7 @@ const getCachedSession = cache(auth);
 const HomeContent = async ({ query }: { query?: string }) => {
   const params = { search: query || null };
 
-  const session = await auth();
-
-  // Log the Sanity ID to verify the auth flow is working
-  console.log(session?.id);
-
-  await getCachedSession();
+  const session = await getCachedSession();
 
   // Fetch startups with live updates enabled
   const { data: posts } = await sanityFetch({ query: STARTUPS_QUERY, params });
