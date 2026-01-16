@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import "easymde/dist/easymde.min.css";
+import {Toaster} from "@/components/ui/sonner";
 
 
 const workSans = localFont({
@@ -69,6 +70,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${workSans.variable} antialiased`}>
         {children}
+      <Toaster />
       </body>
     </html>
   );

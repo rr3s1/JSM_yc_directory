@@ -1,8 +1,12 @@
 import StartupForm from "@/components/StartupForm";
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import { unstable_noStore } from "next/cache";
 
 const Page = async () => {
+    // Mark this route as dynamic (required for auth check)
+    unstable_noStore();
+    
     const session = await auth();
 
     if (!session) redirect("/");
