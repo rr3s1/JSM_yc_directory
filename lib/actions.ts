@@ -2,7 +2,6 @@
 
 import { auth } from "@/auth";
 import { parseServerActionResponse } from "@/lib/utils";
-import { formSchema } from "@/lib/validation";
 import slugify from "slugify";
 import { writeClient } from "@/sanity/lib/write-client";
 
@@ -19,24 +18,18 @@ export const createPitch = async (
             status: "ERROR",
         });
 
-    const formValues = {
-        title: String(form.get("title") || "").trim(),
-        description: String(form.get("description") || "").trim(),
-        category: String(form.get("category") || "").trim(),
-        link: String(form.get("link") || "").trim(),
-        pitch: (pitch || "").trim(),
-    };
+    const { title, description, category, link } = Object.fromEntries(
+        Array.from(form).filter(([key]) => key !== "pitch"),
+    );
+
+    const slug = slugify(title as string, { lower: true, strict: true });
 
     try {
-        const validated = await formSchema.parseAsync(formValues);
-
-        const slug = slugify(validated.title, { lower: true, strict: true });
-
         const startup = {
-            title: validated.title,
-            description: validated.description,
-            category: validated.category,
-            image: validated.link,
+            title,
+            description,
+            category,
+            image: link,
             slug: {
                 _type: "slug",
                 current: slug,
@@ -45,8 +38,7 @@ export const createPitch = async (
                 _type: "reference",
                 _ref: session?.id,
             },
-            views: 0,
-            pitch: validated.pitch,
+            pitch,
         };
 
         const result = await writeClient.create({ _type: "startup", ...startup });
@@ -57,22 +49,18 @@ export const createPitch = async (
             status: "SUCCESS",
         });
     } catch (error) {
-        console.error("Validation or Sanity Mutation Error:", error);
+        console.error(error);
 
-        if (error && typeof error === "object" && "issues" in error) {
-            const zodError = error as { issues: Array<{ path: string[]; message: string }> };
-            const errorMessages = zodError.issues.map(issue => {
-                const field = issue.path.join(".");
-                return `${field}: ${issue.message}`;
-            });
-            return parseServerActionResponse({
-                error: errorMessages.join("; "),
-                status: "ERROR",
-            });
-        }
+        const errorDetails = error instanceof Error
+            ? {
+                  name: error.name,
+                  message: error.message,
+                  stack: error.stack,
+              }
+            : { message: String(error) };
 
         return parseServerActionResponse({
-            error: error instanceof Error ? error.message : "An unexpected error occurred during creation",
+            error: JSON.stringify(errorDetails),
             status: "ERROR",
         });
     }
