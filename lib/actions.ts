@@ -31,7 +31,7 @@ export const createPitch = async (
             category,
             image: link,
             slug: {
-                _type: slug,
+                _type: "slug",
                 current: slug,
             },
             author: {
@@ -49,10 +49,18 @@ export const createPitch = async (
             status: "SUCCESS",
         });
     } catch (error) {
-        console.log(error);
+        console.error(error);
+
+        const errorDetails = error instanceof Error
+            ? {
+                  name: error.name,
+                  message: error.message,
+                  stack: error.stack,
+              }
+            : { message: String(error) };
 
         return parseServerActionResponse({
-            error: JSON.stringify(error),
+            error: JSON.stringify(errorDetails),
             status: "ERROR",
         });
     }
