@@ -12,6 +12,7 @@
     "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate"
   },
   "dependencies": {
+    "@radix-ui/react-avatar": "^1.1.11",
     "@radix-ui/react-slot": "^1.2.4",
     "@sanity/image-url": "^1.2.0",
     "@sanity/vision": "^4.22.0",
