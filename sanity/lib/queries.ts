@@ -58,7 +58,6 @@ export const AUTHOR_BY_ID_QUERY = defineQuery(`
     id,
     name,
     username,
-    email,
     image,
     bio
 }

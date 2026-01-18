@@ -3,7 +3,7 @@ import { Suspense } from "react"
 
 export default function Layout({ children }: Readonly<{ children: React.ReactNode }>) {
     return (
-        <main className="font-work-sans">
+        <main className="font-work-sans bg-white-100 min-h-screen">
         <Suspense fallback={
             <header className="px-5 py-3 bg-white shadow-sm font-work-sans">
                 <nav className="flex justify-between items-center">

@@ -17,7 +17,7 @@ const Navbar = async () => {
                 <div className="flex items-center gap-5 text-black">
                     {session && session?.user ? (
                         <>
-                            <Link href="/startup/create">
+                            <Link href="/startup/create" aria-label="Create startup">
                                 <span className="max-sm:hidden">Create</span>
                                 <BadgePlus className="size-6 sm:hidden" />
                             </Link>
@@ -29,7 +29,7 @@ const Navbar = async () => {
                                     await signOut({ redirectTo: "/" });
                                 }}
                             >
-                                <button type="submit">
+                                <button type="submit" aria-label="Logout">
                                     <span className="max-sm:hidden">Logout</span>
                                     <LogOut className="size-6 sm:hidden text-red-500" />
                                 </button>
