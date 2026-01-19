@@ -9,8 +9,6 @@
 
 import StudioPageClient from './StudioPageClient'
 
-export const dynamic = 'force-static'
-
 // These exports must come from a Server Component, so they live here
 export { metadata, viewport } from 'next-sanity/studio'
 
