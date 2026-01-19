@@ -31,6 +31,15 @@ export const author = defineType({
       name: "bio",
       type: "text",
     }),
+    defineField({
+      name: "slug",
+      type: "slug",
+      options: {
+        source: "username",
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
   ],
   preview: {
     select: {

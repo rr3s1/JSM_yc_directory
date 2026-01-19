@@ -33,6 +33,7 @@ const StartupContent = async ({ id }: { id: string }) => {
     if (!post) return notFound();
 
     const parsedContent = md.render(post?.pitch || "");
+    const sanitizedContent = DOMPurify.sanitize(parsedContent);
 
     return (
         <>
@@ -100,11 +101,11 @@ const StartupContent = async ({ id }: { id: string }) => {
                     </div>
 
                     <h3 className="text-30-bold">Pitch Details</h3>
-                    {parsedContent ? (
+                    {sanitizedContent ? (
                         // biome-ignore lint/security/noDangerouslySetInnerHtml: markdown output is sanitized (DOMPurify) and markdown-it HTML is disabled
                         <article
                             className="prose max-w-4xl font-work-sans break-all"
-                            dangerouslySetInnerHTML={{ __html: parsedContent }}
+                            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
                         />
                     ) : (
                         <p className="no-result">No details provided</p>
