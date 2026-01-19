@@ -18,6 +18,7 @@ export const author = defineType({
     defineField({
       name: "username",
       type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "email",
@@ -30,6 +31,15 @@ export const author = defineType({
     defineField({
       name: "bio",
       type: "text",
+    }),
+    defineField({
+      name: "slug",
+      type: "slug",
+      options: {
+        source: "username",
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
     }),
   ],
   preview: {
