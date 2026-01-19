@@ -18,6 +18,7 @@ export const author = defineType({
     defineField({
       name: "username",
       type: "string",
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "email",

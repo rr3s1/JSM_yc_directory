@@ -52,7 +52,7 @@ A Next.js 15 platform where entrepreneurs can submit their startup ideas for vir
 pitches, and gain exposure through a clean minimalistic design for a smooth user experience.
 
 
-<a href="https://discord.com/invite/n6EdbFJ" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" /></a>
+<a href="https://discord.com/invite/n6EdbFJ" target="_blank"><img src="https://github.com/sujatagunale/EasyRead/assets/151519281/618f4872-1e10-42da-8213-1d69e486d02e" alt="Join our Discord" /></a>
 
 
 ## <a name="tech-stack">⚙️ Tech Stack</a>
@@ -563,7 +563,7 @@ export const PLAYLIST_BY_SLUG_QUERY =
 
 - Fonts and Assets used in the project can be found [here](https://drive.google.com/file/d/1OEFHnEq5pQFP86u8FOBLBBNxKPsbjjqU/view?usp=sharing)
 - [Learn Server Actions](https://youtu.be/FKZAXFjxlJI?feature=shared)
-- [Applicaton Workflow](https://miro.com/app/board/uXjVLT_tMdU=/?share_link_id=580854757703)
+- [Application Workflow](https://miro.com/app/board/uXjVLT_tMdU=/?share_link_id=580854757703)
 
 ## <a name="more">🚀 More</a>
 
